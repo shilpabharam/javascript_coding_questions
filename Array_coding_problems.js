@@ -113,3 +113,96 @@ reverseArrK(arr, 3);
 console.log(arr);
 
 
+
+
+class LRUCache{
+    constructor(capacity = 2){
+        this.capacity = capacity;
+        this.cache = new Map()
+    }
+    
+    get(key){
+        if(!this.cache.has(key)) return -1;
+        let value = this.cache.get(key)
+        this.cache.delete(key);
+        this.cache.set(key, value)
+        return this.cache.get(key);
+        
+    }
+    
+    put(key, value){
+        if(this.cache.size === this.capacity){
+            const firstKey = this.cache.keys().next().value;
+            this.cache.delete(firstKey);
+        }
+        
+        if(this.cache.has(key)){
+            this.cache.delete(key);
+        }
+        this.cache.set(key, value)
+    }
+}
+
+const lru = new LRUCache(2);
+lru.put(1, 1); // cache = {1=1}
+lru.put(2, 2); // cache = {1=1, 2=2}
+console.log(lru.get(1)); // returns 1 → now 1 is most recent
+lru.put(3, 3); 
+// LRU was key=2 → removed
+// cache = {1=1, 3=3}
+console.log(lru.get(2)); // -1 (not found)
+lru.put(4, 4);
+// LRU was key=1 → removed
+// cache = {3=3, 4=4}
+console.log(lru.get(1)); // -1
+console.log(lru.get(3)); // 3
+console.log(lru.get(4)); // 4
+
+
+function multiplicationOf(numbers) {
+  const n = numbers.length;
+  const result = Array(n).fill(1);
+
+  let prefix = 1;
+  for (let i = 0; i < n; i++) {
+    result[i] = prefix;  // [1, 2, 6]
+    prefix *= numbers[i];
+  }
+
+
+  let suffix = 1;
+  for (let i = n - 1; i >= 0; i--) {
+    result[i] *= suffix;   // [1, 12, 6]
+    suffix *= numbers[i];  // [1,12, 6]
+  }
+
+  return result;
+}
+
+console.log(multiplicationOf([2,3,4]))
+
+
+function deepOmit(obj, keys) {
+ if (obj === null || typeof obj !== 'object') { return obj; }
+  if (Array.isArray(obj)) {
+   return obj.map(item => deepOmit(item, keys));
+ }
+ const result = {};
+ for (let key in obj) {
+   if (keys.includes(key)) {  continue; }
+   result[key] = deepOmit(obj[key], keys);
+ }
+ return result;
+}
+
+
+const obj = {
+ a: 1,
+ b: 2,
+ c: {
+   d: 3,
+   e: 4,
+ },
+ f: [5, 6],
+};
+console.log(deepOmit(obj, ['b', 'c','e']));
