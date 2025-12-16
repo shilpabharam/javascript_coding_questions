@@ -206,3 +206,42 @@ const obj = {
  f: [5, 6],
 };
 console.log(deepOmit(obj, ['b', 'c','e']));
+
+
+/* String Anagram */
+
+function angram(str1, str2) {
+ if (str1.length != str2.length) {
+   return false;
+ }
+
+ let char = 256; // all character are include special char, letter, number include code 0-255;
+ let charArr = new Array(char).fill(0);
+
+ for (let i = 0; i < str1.length; i++) {
+   charArr[str1.charCodeAt(i)]++;
+   charArr[str2.charCodeAt(i)]--;
+ }
+ for (let j = 0; j < charArr.length; j++) {
+   if (charArr[j] !== 0) return false;
+ }
+ return true;
+}
+console.log(angram('trewsaq' , 'qwert'));
+
+
+/* Move Zero to End of Array  */
+function moveZeroEnd(arr) {
+  let first = 0;
+  for(let i=0; i< arr.length ; i++){
+      if(arr[i] != 0) {
+            [arr[first], arr[i]] = [arr[i], arr[first]];
+            first++;
+      }
+  }
+  return arr;
+}
+
+
+console.log(moveZeroEnd([0,1,0,3,12]));
+
