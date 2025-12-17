@@ -245,3 +245,18 @@ function moveZeroEnd(arr) {
 
 console.log(moveZeroEnd([0,1,0,3,12]));
 
+ /*two numbers in an array that add up to a target.*/
+
+const findTarget= (arr, target)=>{
+   let map = new Map()
+   for(let i =0; i< arr.length;i++){
+       let rem = target - arr[i];
+       if(map.has(rem)){
+           return [map.get(i) , i]
+       }
+       map.set(arr[i] , i )
+   }
+}
+
+
+console.log(findTarget([2,5,7,8,3,2] ,  9 ))
